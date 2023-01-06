@@ -1,0 +1,52 @@
+#include <stdio.h>
+
+#define MIN_FLOOR 1
+#define MAX_FLOOR 5
+#define MIN_BASEMENT_FLOOR -3
+#define MAX_BASEMENT_FLOOR -1
+
+// Prototipi funkcij
+int pridobiti_ciljno_nadstropje();
+void pojdi_na_parket(int trenutno_nadstropje, int namembno_nadstropje);
+
+int main() {
+    // Dvigalo se zacne v pritlicju
+    int trenutno_nadstropje = 0;
+
+    while (1) {
+        printf("Trenutno ste v nadstropju %d.\n", trenutno_nadstropje);
+        int namembno_nadstropje = pridobiti_ciljno_nadstropje();
+        pojdi_na_parket(trenutno_nadstropje, namembno_nadstropje);
+        trenutno_nadstropje = namembno_nadstropje;
+    }
+
+    return 0;
+}
+
+// Uporabnika vprasa za ciljno nadstropje in ga vrne
+int pridobiti_ciljno_nadstropje() {
+    int floor;
+    while (1) {
+        printf("Vnesite številko nadstropja, v katero želite iti. (%d-%d za običajna tla, %d-%d za kletna tla): ", MIN_FLOOR, MAX_FLOOR, MIN_BASEMENT_FLOOR, MAX_BASEMENT_FLOOR);
+        scanf("%d", &floor);
+        if (floor >= MIN_FLOOR && floor <= MAX_FLOOR) {
+            // Veljavno redno nadstropje
+            return floor;
+        } else if (floor >= MIN_BASEMENT_FLOOR && floor <= MAX_BASEMENT_FLOOR) {
+            // Veljavna kletna etaza
+            return floor;
+        } else {
+            printf("Nepravilna stevilka nadstropja. Poskusite znova.\n");
+        }
+    }
+}
+
+// dvigalo zapelje v določeno nadstropje
+void pojdi_na_parket(int trenutno_nadstropje, int namembno_nadstropje) {
+    printf("Prehod s tal %d na tla %d...\n", trenutno_nadstropje, namembno_nadstropje);
+    // Simulirajte gibanje dvigala s tiskanjem znakov '.'
+    for (int i = 0; i < abs(namembno_nadstropje - trenutno_nadstropje); i++) {
+        printf(".");
+    }
+    printf("\n");
+}
